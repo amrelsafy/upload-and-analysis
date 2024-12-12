@@ -1,0 +1,29 @@
+
+.full-screen-container{
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #F6F6F4;
+}
+
+.profile-content{
+  padding: 50px;
+  background-color: #fff;
+  width: 50%;
+}
+
+.profile-title{
+  font-weight: 600;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+
+.get-profiles-btn{
+  padding: 10px 20px;
+  border-radius: 16px;
+  margin-top: 15px;
+  color: #007C89;
+  border: 1px solid #007C89;
+}

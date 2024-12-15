@@ -6,6 +6,8 @@ import "./styles.css";
 import { registerUser } from "@/api/auth";
 import { useUser } from "@/utils/UserContextProvider";
 import { redirect } from "next/navigation";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const [formValues, setFormValues] = useState({
@@ -54,10 +56,16 @@ const Register = () => {
     const { username, password } = formValues;
 
     if (username && password) {
-      const { token, user } = await registerUser({ username, password });
-      window.localStorage.setItem("token", token);
-      setUser(user);
-      redirect(`/user/${user.username}`);
+      let data = await registerUser({ username, password });
+      if (data.statusCode === 400) {
+        toast.error(data.message);
+      } else {
+        const { token, user, message } = data;
+        toast.success(message);
+        window.localStorage.setItem("token", token);
+        setUser(user);
+        redirect(`/user/${user.username}`);
+      }
     }
   };
 
@@ -114,6 +122,7 @@ const Register = () => {
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

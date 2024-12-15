@@ -10,7 +10,7 @@ import { JwtService } from "@nestjs/jwt";
 @Injectable()
 export default class RegisterCommand implements IRegisterCommand{
   constructor(private usersRepository: IUserRepository, private jwtService: JwtService){}
-  async execute(user: UserDTO): Promise<{token: string, user: UserDTO}> {
+  async execute(user: UserDTO): Promise<{token: string, user: UserDTO, message: string}> {
     
     let existUser = await this.usersRepository.getByUsername(user.username);
     if(existUser)
@@ -32,7 +32,8 @@ export default class RegisterCommand implements IRegisterCommand{
 
     return {
       token,
-      user: userResult
+      user: userResult,
+      message: "User has been registered successfully"
     }
   }
 

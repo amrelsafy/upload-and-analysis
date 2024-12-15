@@ -6,6 +6,8 @@ import Link from "next/link";
 import { redirect } from "next/navigation";
 import { ChangeEvent, useState, MouseEvent } from "react";
 import { FaEyeSlash } from "react-icons/fa";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [formValues, setFormValues] = useState({
@@ -21,10 +23,17 @@ const Login = () => {
 
   const onSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const { token, user } = await loginUser(formValues);
-    window.localStorage.setItem("token", token);
-    setUser(user);
-    redirect(`/user/${user.username}`);
+    let data = await loginUser(formValues);
+    if (data.statusCode === 401) {
+      toast.error(data.message);
+    }
+    if (data.token) {
+      const { token, user, message } = data;
+      toast.success(message);
+      window.localStorage.setItem("token", token);
+      setUser(user);
+      redirect(`/user/${user.username}`);
+    }
   };
 
   return (
@@ -67,6 +76,7 @@ const Login = () => {
           </Link>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

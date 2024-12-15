@@ -11,7 +11,7 @@ export default class LoginCommand implements ILoginCommand{
 
   constructor(private jwtService: JwtService, private usersRepository: IUserRepository){}
 
-  async execute(userDTO: UserDTO): Promise<{token: string, user: UserDTO}> {
+  async execute(userDTO: UserDTO): Promise<{token: string, user: UserDTO, message: string}> {
     let user = await this.usersRepository.getByUsername(userDTO.username);
     if(!user)
       throw new HttpException('Username or password are incorrect', 401);
@@ -22,7 +22,8 @@ export default class LoginCommand implements ILoginCommand{
       const { password, ...foundUser } = user;
       return {
         token: this.jwtService.sign(foundUser),
-        user: foundUser
+        user: foundUser,
+        message: "User logged in successfully"
       };
     }
     else

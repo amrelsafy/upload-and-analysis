@@ -9,6 +9,12 @@ services:
     env_file:
       - .env
 
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    command: redis-server
+
   pgadmin:
     image: dpage/pgadmin4
     restart: always
@@ -31,6 +37,7 @@ services:
       - .env
     depends_on:
       - db
+      - redis
     volumes:
       - ./api/src:/usr/src/app/src
 

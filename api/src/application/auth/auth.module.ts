@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import LoginCommand from './Login/LoginCommand.service';
 import RegisterCommand from './Register/RegisterCommand.service';
 import GetProfileCommand from './GetProfile/GetProfileCommand.service';
-import UsersRepositoryModule from 'src/persistance/repositories/UsersRepository.module';
+import UsersRepositoryModule from 'src/persistance/repositories/Users/UsersRepository.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
